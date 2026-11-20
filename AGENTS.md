@@ -1,0 +1,72 @@
+- **Small functions**: Prefer short functions with a single responsibility. Extract when the extracted procedure has a meaningful name, responsibility, or reuse. Do not split code merely to satisfy a line count.
+- **One level of abstraction in a function**: Every statement in a procedure sits at roughly the same level — one step below the name. Don't mix high-level intent with low-level details. However - do not extract functions artificially just to be compliant to this rule - treat it more as a guideline
+- **Honest function names**: The name must accurately describe what the procedure does and its side effects. Prefer verbs/verb phrases. The reader should be able to tell what the function accepts, if the function modifies any of the parameters, the function's side-effects and what the function returns by its name (this is ambitious but doable with proper eloquency)
+- **Few arguments**: Avoid flag arguments. However, if natural, more arguments are fine - be pragmatic. Avoid boolean parameters that change function behavior. Prefer separate functions or an explicit configuration type when multiple behaviors are genuinely required.
+- **Prefer pure when natural**: Same inputs → same outputs. Side effects must be obvious from the name. Prefer atomic and pluggable functions. However - some useful operations are inherently stateful. Guideline.
+- **Concision**: Use the language’s natural features. Avoid long-winded ceremony, unnecessary validation, and over-engineering. Validate at system boundaries; trust inside.
+- **Global variables**: Avoid mutable global state. Global constants and immutable lookup tables are acceptable when they improve clarity or allow the programmer to tweak parameters (ie. color, pixel values, etc.)
+- Code is a liability. Fewer lines, fewer moving parts, less cognitive load.
+- Feel free to question the existing code and spec if it leads to potentially more complicated and less maintainable code
+- Do one thing well. Prefer removing code over adding features.
+- No hidden control flow, no surprise mutations, no defensive bloat “just in case”.
+- Feel free to run small exploratory scripts, experiments, or temporary procedures to test ideas before committing to a design.
+- Compile cleanly with all strict flags
+- **Code review stance**: Be ambitious. If significant simplification or refactoring would improve clarity and maintainability, propose it clearly (with reasons) rather than accepting complexity.
+- **Research order**: 1) Existing project source  2) Official docs / standard library  3) Forum / community knowledge  4) Only then invent a solution.
+- The main goal of this project is simplicity and ease of understanding.
+- Use Simplified Technical English for communication
+- **Clarify first**: Clarify when ambiguity materially affects the implementation, architecture, or expected behavior. Otherwise, make the simplest reasonable assumption, state it, and proceed.
+- **Stay in scope**: Do only what was asked. Do not expand scope, add “nice-to-haves”, or invent features unless discussed. If you strongly feel that some additional scope would add way more benefits than code noise - make a suggestion to the user
+- **Dependencies**: Prefer the standard library and code already in the project. Adding a new external dependency requires clear justification and user agreement.
+- **Comments**: Prefer self-documenting code. Add a short comment only for non-obvious algorithms, important trade-offs, or intent that the name cannot express.
+- **When stuck**: Stop and research or ask. Do not thrash or produce large speculative changes.
+- **Readability over cleverness**: Prefer obvious code over clever code. A reader should understand the implementation without mentally executing multiple layers of indirection.
+- **No premature abstraction**: Do not introduce interfaces, generics, factories, managers, registries, or frameworks without a demonstrated need. Duplication is often cheaper than abstraction.
+- **No speculative generalization**: Solve the actual problem, not hypothetical future problems. Generalize only when multiple real use cases justify it.
+- **Prefer data over machinery**: Use simple data structures and straightforward control flow. Avoid elaborate object hierarchies and unnecessary state.
+- **Explicit over implicit**: Make dependencies, control flow, ownership, mutations, and side effects visible. Avoid magic, reflection, implicit initialization, and hidden conventions.
+- **Composition over indirection**: Build larger behavior from small, understandable procedures. Avoid unnecessary layers and wrappers.
+- **Fail early**: Detect invalid states at system boundaries. Avoid allowing invalid state to propagate through the program.
+- **Make invalid states difficult or impossible to represent**: Use types and data structures that express actual constraints instead of relying on comments and scattered checks.
+- **Minimize state**: Prefer immutable data where practical. Keep mutable state local, limit its lifetime, and make ownership clear.
+- **Avoid unnecessary configuration**: Every option creates complexity. Prefer sensible defaults and fixed behavior until real requirements demand configurability.
+- **No compatibility theater**: Do not preserve obsolete APIs, abstractions, or behavior without an explicit compatibility requirement.
+- **Delete dead code**: Remove unused functions, variables, dependencies, comments, and abstractions. Do not leave commented-out implementations or speculative fallbacks.
+- **Preserve consistency**: Follow existing project conventions unless there is a concrete reason to improve them. Avoid introducing a second way to solve the same problem.
+- **Measure before optimizing**: Prefer simple algorithms first. Optimize only when profiling or clear complexity requirements justify it.
+- **Test behavior, not implementation**: Tests should verify externally observable behavior. Avoid tests coupled to internal implementation details.
+- **No meaningless tests**: Do not add tests that merely repeat implementation logic or test trivial language features.
+- **Verify changes**: After implementation, compile, run relevant tests, and inspect the final diff. Do not claim success without verification.
+- **Leave the code better**: Remove complexity encountered while solving the task when doing so is safe and within scope.
+- The ideal abstraction is one that reduces the amount of information a reader must hold in their head.
+- Optimize for the working programmer: Optimize the development experience, debugging experience, and ability to understand the system. Do not optimize for theoretical architectural elegance.
+- Understand the cost of abstractions: Every abstraction has an implementation cost, cognitive cost, debugging cost, and performance cost. Evaluate all of them.
+- **Minimize concepts**: Prefer fewer concepts, mechanisms, and special cases. A solution requiring the reader to understand fewer things is usually better, even if it contains slightly more code.
+- **Minimize conceptual surface area**: Avoid introducing new terminology, patterns, conventions, or mechanisms unless they solve a concrete problem.
+- **Local reasoning**: Prefer code whose behavior can be understood by inspecting a small, local section. Avoid requiring readers to trace behavior across many files, callbacks, abstractions, or layers.
+- **Small interfaces**: Expose the minimum functionality necessary. Keep internal implementation details private.
+- **Stable boundaries**: Keep module boundaries simple and explicit. Avoid exposing internal data structures unless consumers genuinely need them.
+- **Avoid pass-through abstractions**: Do not create functions, types, or modules that merely forward calls without adding meaningful behavior or decoupling.
+- **Reviewable changes**: Prefer changes that are easy to understand and verify in a diff.
+- **No cleverness for its own sake**: A straightforward implementation is better than a clever one unless the clever approach provides a concrete advantage.
+- Principles are guidelines, not rules to satisfy mechanically. Optimize for the simplest implementation that is easy to understand. Do not follow a principle when doing so makes the code worse.
+- Any non-trivial decision or rule should live in exactly one place.
+- Try to avoid passing an argument down multiple levels of function calls
+- Make it easy and even joyful to read through the code you have written. Assume that the programmer couldn't even be bothered to read through the file before your changes - but after it should be a breeze
+- If you think a little bit of regression is worth it when code gets simplified dramatically - go for it but inform the user
+- If you see a function, type, struct etc. in a wrong file or package - move it
+- If data was verified earlier in the pipeline - don't verify it again
+- If the user asked you to implement a new feature and that feature wouldn't fit nicely into the code unless it was refactored - refactor code instead of forcibly trying to adapt a feature that would make the code worse. The code must look as if it was was written with that feature in mind from the beginning
+- Inside the codebase there should be only one way of doing a certain thing. Even if both are correct, within a single codebase only one should be used
+- Except simple cases, prefer not to inline a function call in another's function argument list. Use an explanatory variable
+- Think outside of the box and question everything. Maybe there is a better and cleaner way of doing something even if the existing code works
+- Do not force the caller to interpret a function's return value. For example empty string meaning an error is bad
+- Question everything. Just because something is in the code and works - doesn't mean it's correct and clean
+- Each function should do exactly what it describes. Be very strict when it comes to ownership of responsibility and computation
+
+Specific for this project:
+- Do not worry about backwards compatibility - purge old code and algorithms. Cache and old configurations are allowed to break
+- **Odin**: Before starting implementation research Odin's features at https://odin-lang.org/docs/overview/ https://odin-lang.org/docs/demo/ https://odin-lang.org/docs/attributes/ https://odin-lang.org/docs/directives/ https://zylinski.se/ Odin also has an extensive standard library - prefer using it over reinventing the wheel. Follow Odin's philosophy and patterns. Write idiomatic code. Take full advantage of Odin's features and syntax including its advanced features
+- Research how other Rocksmith clones in the workspace handle features when asked to implement a new one. Treat them more like suggestions and inspirations rather than something to copy
+- Additional useful context might be present in the Editor On Fire project - closely related to Rocksmith
+- For one-line if/for statements prefer Odin's `do` syntax rather than braces
